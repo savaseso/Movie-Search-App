@@ -1,19 +1,23 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Movie = (props) => {
     console.log(props.movie)
-    const { title, backdrop_path } = props.movie
+    const { title, backdrop_path,id,vote_average,original_language } = props.movie
 return(
-    
         <div className="col-md-6">
-            <div className="card mb-4 shadow-sm">
+            <div className="card mb-4 shadow-sm" >
+            <div className="d-flex">
+                <img className="card-img-top" style={{width:'250px',height:'130px'}} src={`https://image.tmdb.org/t/p/original${backdrop_path}`} alt="Movie Pictures"/>
                 <div className="card-body">
-                    <img src='' alt=''/>
-                    <h5>{title}</h5>
+                    <h6 className="card-title">{title}</h6>
+                    <p className="card-text">score: <strong>{vote_average}</strong></p>
+                    <p className="card-text">language: <strong>{original_language}</strong></p>
                 </div>
             </div>
+            <Link to={`movie/${id}`} className="btn btn-dark mt-2">Details...</Link>
+            </div>
         </div>
-    
     )
 }
 export default Movie
