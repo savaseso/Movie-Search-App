@@ -10,7 +10,7 @@ return(
             <div className="d-flex">
                 <img className="card-img-top" style={{width:'250px',height:'130px'}} src={`https://image.tmdb.org/t/p/original${backdrop_path}`} alt="Movie Pictures"/>
                 <div className="card-body">
-                    <h6 className="card-title">{title}</h6>
+                    <h6 className="card-title">{title.length>32 ? title.slice(0,title.search(':')): title}</h6>
                     <p className="card-text">score: <strong>{vote_average}</strong></p>
                     <p className="card-text">language: <strong>{original_language}</strong></p>
                 </div>

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from './context';
 import Navbar from './components/layouts/Navbar'
 import Index from './components/layouts/Index'
+import Details from './components/movies/Details'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <div className="container">
           <Switch>
             <Route path="/" exact component={Index}/>
+            <Route path="/movie/:id" component={Details}/>
           </Switch>
         </div>
       </React.Fragment>
