@@ -1,32 +1,57 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import YouTube from 'react-youtube';
+import Spinner from '../layouts/Spinner';
+import { Link } from 'react-router-dom'
 
 class Details extends Component {
     state = {
-        videos : {}
+        videos : {},
+        details: {}
       }
     async componentDidMount(){
-        await axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}/videos?api_key=9b92096f6cb5ae922d214aed2bfedc05&language=en-US`)
-        .then(res => this.setState({videos:res.data.results[0]}))
+        await axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}/videos?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
+        .then(res => {this.setState({videos:res.data.results[0]})
+
+        return axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
+
+      })
+        .then(res => this.setState({details:res.data}))
+        .catch(err => console.log(err))
+         
     }
     
     render() {
-        const opts = {
-            height: '390',
-            width: '640',
-            playerVars: { 
-              autoplay: 0
-            }
-          };
-          console.log(this.state.videos)
-        return (
-            <YouTube
-            videoId={this.state.videos.key}
-            opts={opts}
-          />
-        );
+      const {original_title,overview,release_date} = this.state.details
+      const {videos,details} = this.state
+      console.log(details)
+        if(Object.keys(videos).length === 0 || videos === undefined || details === undefined || Object.keys(details).length === 0){
+          return <Spinner />
+        } else {
+          return (
+            <div className="container">
+               <Link className="btn btn-dark btn-sm mb-4" to='/'> Go Back</Link>
+               <div className="card">
+                 <h4 className="card-header">
+                  {original_title} {<span className="font-weight-light">({release_date.slice(0,4)})</span>}
+                 </h4>
+               </div>
+               <h5 className="mt-4">Overview</h5>
+               <p>{overview}</p>
+               <YouTube videoId={this.state.videos.key} opts={opts} />
+             </div>
+       );
+        }
+        
     }
 }
+
+const opts = {
+  height: '390',
+  width: '640',
+  playerVars: { 
+    autoplay: 0
+  }
+};
 
 export default Details;

@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Movie = (props) => {
-    console.log(props.movie)
     const { title, backdrop_path,id,vote_average,original_language } = props.movie
+    console.log(props)
 return(
         <div className="col-md-6">
             <div className="card mb-4 shadow-sm" >
@@ -15,7 +15,7 @@ return(
                     <p className="card-text">language: <strong>{original_language}</strong></p>
                 </div>
             </div>
-            <Link to={`movie/${id}`} className="btn btn-dark mt-2">Details...</Link>
+            <Link to={`movie/${id}`} className="btn btn-outline-dark btn-sm mt-2">More Info</Link>
             </div>
         </div>
     )

@@ -8,6 +8,7 @@ class Movies extends Component {
             <Consumer>
                 {value => {
                     const { movie_list,heading } = value
+                    console.log(value)
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
