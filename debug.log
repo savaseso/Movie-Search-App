@@ -1,0 +1,3 @@
+[0802/060348.658:ERROR:process_reader_win.cc(123)] NtOpenThread: {Hozzáférés megtagadva} A folyamat hozzáférést kért egy objektumhoz, de ehhez nem volt engedélye. (0xc0000022)
+[0802/060349.407:ERROR:exception_snapshot_win.cc(98)] thread ID 13272 not found in process
+[0802/060349.430:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Kísérlet történt egy éppen kilépõ folyamat elérésére. (0xc000010a)
