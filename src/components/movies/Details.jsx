@@ -38,7 +38,14 @@ class Details extends Component {
                </div>
                <h5 className="mt-4">Overview</h5>
                <p>{overview}</p>
-               <YouTube videoId={this.state.videos.key} opts={opts} />
+               <div className='d-flex justify-content-between mt-5'>
+                 <ul className="list-group mt-3">
+                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
+                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
+                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
+                 </ul>
+                 <YouTube videoId={this.state.videos.key} opts={opts} />
+               </div>
              </div>
        );
         }

@@ -1,10 +1,11 @@
 import React from 'react'
 import Movies from '../movies/Movies'
+import Search from '../movies/Search'
 
 const Index = (props) => {
     return(
         <React.Fragment>
-            <input type="text" />
+            <Search />
             <Movies />
         </React.Fragment>
     )
