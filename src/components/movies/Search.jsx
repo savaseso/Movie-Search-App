@@ -6,10 +6,13 @@ class Search extends Component {
     state = {
         movieTitle:''
     }
-    findMovie = (e) => {
+    findMovie = (dispatch,e) => {
         e.preventDefault();
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${this.state.movieTitle}&page=1&include_adult=false`)
-        .then(res => console.log(res.data))
+        .then(res =>  dispatch({
+            type:'SEARCH_MOVIES',
+            payload: res.data.results
+        }))
     }
     onChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
@@ -18,12 +21,13 @@ class Search extends Component {
         return (
             <Consumer>
                 {value => {
-                    return (
+                     const {dispatch} = value
+                        return (
                         <div className="card card-body mb-4 p-4">
                             <h3 className='display-3 text-center'>
                             <i className="fas fa-film">Search for a Movie</i>
                             </h3>
-                            <form onSubmit = {this.findMovie}>
+                            <form onSubmit = {this.findMovie.bind(this,dispatch)}>
                                 <input type="text" placeholder='Movie title...' name='movieTitle' value={this.state.movieTitle} onChange={this.onChange}/>
                                 <button type="submit">Search</button>
                             </form>
