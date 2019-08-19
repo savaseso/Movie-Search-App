@@ -7,7 +7,7 @@ return(
         <div className="col-md-6">
             <div className="card mb-4 shadow-sm" >
             <div className="d-flex">
-                <img className="card-img-top" style={{width:'250px',height:'130px'}} src={`https://image.tmdb.org/t/p/original${backdrop_path}`} alt="Movie Pictures"/>
+                <img className="card-img-top" style={{width:'250px',height:'130px'}} src={bgImage(backdrop_path)} alt="Movie Pictures"/>
                 <div className="card-body">
                     <h6 className="card-title">{title.length>32 ? title.slice(0,title.search(':')): title}</h6>
                     <p className="card-text">score: <strong>{vote_average}</strong></p>
@@ -19,4 +19,7 @@ return(
         </div>
     )
 }
+
+const bgImage = (backdrop_path) => backdrop_path?`https://image.tmdb.org/t/p/original${backdrop_path}`:`https://via.placeholder.com/250x130`
+
 export default Movie

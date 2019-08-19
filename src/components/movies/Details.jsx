@@ -24,7 +24,7 @@ class Details extends Component {
     render() {
       const {original_title,overview,release_date} = this.state.details
       const {videos,details} = this.state
-      console.log(details)
+      console.log(this.state.details)
         if(Object.keys(videos).length === 0 || videos === undefined || details === undefined || Object.keys(details).length === 0){
           return <Spinner />
         } else {
@@ -40,9 +40,9 @@ class Details extends Component {
                <p>{overview}</p>
                <div className='d-flex justify-content-between mt-5'>
                  <ul className="list-group mt-3">
-                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
-                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
-                    <li className="list-group-item"><strong>Producer:</strong>salkdjasjkldasljkdasj</li>
+                    <li className="list-group-item"><strong>Homepage:</strong>{' '}<a href={details.homepage} target="blank">{details.homepage}</a></li>
+                    <li className="list-group-item"><strong>Runtime:</strong>{' '}{details.runtime} min</li>
+                    <li className="list-group-item"><strong>Revenue:</strong>{' '}{details.revenue}</li>
                  </ul>
                  <YouTube videoId={this.state.videos.key} opts={opts} />
                </div>

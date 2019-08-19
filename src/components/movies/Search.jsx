@@ -6,14 +6,16 @@ class Search extends Component {
     state = {
         movieTitle:''
     }
-    findMovie = (dispatch,e) => {
+     findMovie = (dispatch,e) => {
         e.preventDefault();
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${this.state.movieTitle}&page=1&include_adult=false`)
-        .then(res =>  dispatch({
+        .then(res =>  
+             dispatch({
             type:'SEARCH_MOVIES',
             payload: res.data.results
-        }))
-    }
+        }) )
+        this.setState({movieTitle:''})
+    } 
     onChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
     }
@@ -24,13 +26,25 @@ class Search extends Component {
                      const {dispatch} = value
                         return (
                         <div className="card card-body mb-4 p-4">
-                            <h3 className='display-3 text-center'>
-                            <i className="fas fa-film">Search for a Movie</i>
-                            </h3>
-                            <form onSubmit = {this.findMovie.bind(this,dispatch)}>
-                                <input type="text" placeholder='Movie title...' name='movieTitle' value={this.state.movieTitle} onChange={this.onChange}/>
-                                <button type="submit">Search</button>
-                            </form>
+                            <h2 className='display-5 text-center mb-3'>
+                            <i className="fa fa-video-camera">{' '}Search for a Movie</i>
+                            </h2>
+                            <form  onSubmit = {this.findMovie.bind(this,dispatch)}>
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text">
+                                            <i className="fa fa-search"></i>
+                                        </div>
+                                    </div>
+                                    <input 
+                                        className="form-control py-2 border-right-0 border" 
+                                        type="text" placeholder="Movie title..." 
+                                        name='movieTitle' 
+                                        value={this.state.movieTitle} 
+                                        onChange={this.onChange} />
+                                    <button className="btn btn-primary btn-block" type="submit">Search</button>
+                                </div>
+                            </form>     
                         </div>
                     )
                 }}
