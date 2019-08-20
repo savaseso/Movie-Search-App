@@ -12,9 +12,9 @@ class Search extends Component {
         .then(res =>  
              dispatch({
             type:'SEARCH_MOVIES',
-            payload: res.data.results
+            payload: res.data.results,
+            query: this.state.movieTitle
         }) )
-        this.setState({movieTitle:''})
     } 
     onChange = (e) => {
         this.setState({[e.target.name]:e.target.value})

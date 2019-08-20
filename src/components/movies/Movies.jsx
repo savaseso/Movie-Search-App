@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Consumer } from '../../context';
-import Spinner from '../layouts/Spinner'
+import Spinner from '../layouts/Spinner';
+import Pagination from '../layouts/Pagination'
 import Movie from './Movie'
-class Movies extends Component {
-    render(){
+
+const Movies = () => {
         return(
             <Consumer>
                 {value => {
-                    const { movie_list,heading } = value
-                    console.log(value)
+                    const { movie_list,heading,movie_items,dispatch,query } = value
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
@@ -20,11 +20,12 @@ class Movies extends Component {
                                         <Movie key={movie.id} movie={movie}/>
                                     ))}
                                 </div>
+                                <Pagination itemsCount = {movie_items} pageSize = {movie_list.length} dispatch = {dispatch} heading = {heading} query={query}/>
                             </React.Fragment>
                         )} 
                 }}
             </Consumer>
         )
     }
-}
+
 export default Movies

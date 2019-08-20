@@ -42,7 +42,7 @@ class Details extends Component {
                  <ul className="list-group mt-3">
                     <li className="list-group-item"><strong>Homepage:</strong>{' '}<a href={details.homepage} target="blank">{details.homepage}</a></li>
                     <li className="list-group-item"><strong>Runtime:</strong>{' '}{details.runtime} min</li>
-                    <li className="list-group-item"><strong>Revenue:</strong>{' '}{details.revenue}</li>
+                    <li className="list-group-item"><strong>Revenue:</strong>{' '}${details.revenue.toLocaleString()}</li>
                  </ul>
                  <YouTube videoId={this.state.videos.key} opts={opts} />
                </div>
