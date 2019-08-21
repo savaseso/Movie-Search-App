@@ -8,7 +8,7 @@ const Movies = () => {
         return(
             <Consumer>
                 {value => {
-                    const { movie_list,heading,movie_items,dispatch,query } = value
+                    const { movie_list,heading,total_results,dispatch,query } = value
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
@@ -20,7 +20,7 @@ const Movies = () => {
                                         <Movie key={movie.id} movie={movie}/>
                                     ))}
                                 </div>
-                                <Pagination itemsCount = {movie_items} pageSize = {movie_list.length} dispatch = {dispatch} heading = {heading} query={query}/>
+                                <Pagination itemsCount = {total_results} pageSize = {movie_list.length} dispatch = {dispatch} heading = {heading} query={query}/>
                             </React.Fragment>
                         )} 
                 }}

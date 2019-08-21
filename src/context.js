@@ -10,7 +10,8 @@ const Context = React.createContext();
                 ...state,
                 movie_list: action.payload,
                 heading: 'Search Results',
-                query:action.query
+                query:action.query,
+                total_results:action.total,
             }
         case 'PAGINATION':
             return {
@@ -25,17 +26,21 @@ const Context = React.createContext();
 export class Provider extends Component {
     state = {
         movie_list: [],
+        total_results:0,
         query:'',
         heading: `Top 20 Movies`,
          dispatch: action => this.setState(state => reducer(state, action))
      }
     async componentDidMount() {
         await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-            .then(res => this.setState({ movie_list: res.data.results}))
+            .then(res => this.setState({ 
+                movie_list: res.data.results,
+                total_results:res.data.total_results
+            }))
             .catch(err => console.log(err))
     }
     render() {
-        console.log(this.state.query)
+        console.log(this.state.total_results)
         return (
             <Context.Provider value={this.state}>
                 {this.props.children}

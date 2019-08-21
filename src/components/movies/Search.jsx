@@ -13,7 +13,8 @@ class Search extends Component {
              dispatch({
             type:'SEARCH_MOVIES',
             payload: res.data.results,
-            query: this.state.movieTitle
+            query: this.state.movieTitle,
+            total:res.data.total_results
         }) )
     } 
     onChange = (e) => {

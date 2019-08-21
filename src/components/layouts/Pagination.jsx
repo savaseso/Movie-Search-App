@@ -5,9 +5,6 @@ import _ from 'lodash';
 
 
 class Pagination extends Component {
-    state = {
-       itemsCount: 100
-    }
     onPageChange = (page) => {
         const {heading, dispatch,query } = this.props
          if(heading === 'Top 20 Movies'){ 
@@ -27,20 +24,21 @@ class Pagination extends Component {
     }
 
     render(){
-        const pagesCount = Math.ceil(this.state.itemsCount/this.props.pageSize)
-        if(pagesCount === 1) return null;
+        const pagesCount = Math.ceil(this.props.itemsCount/this.props.pageSize)
+        if(this.props.pageSize < 20) return null;
         const pages = _.range(1, pagesCount + 1)
-        return (
-                <nav aria-label="...">
-                    <ul className="pagination pagination-lg">
-                        {pages.map(page=>(
-                            <li key = {page} className="page-item">
-                                <Link to='' className="page-link" onClick={()=>this.onPageChange(page)}>{page}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-        )
+        console.log(pages)
+            return (
+                    <nav aria-label="...">
+                        <ul className="pagination pagination-lg">
+                            {pages.slice(0,8).map(page=>(
+                                <li key = {page} className="page-item mx-auto">
+                                    <Link to='' className="page-link" onClick={()=>this.onPageChange(page)}>{page}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+            )
     }
 }
 
