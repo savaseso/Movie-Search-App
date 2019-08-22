@@ -7,10 +7,14 @@ import _ from 'lodash';
 class Pagination extends Component {
     state = {
         startIndex:0,
-        endIndex:4
+        endIndex:5,
+        currentPage:1
     }
     onPageChange = (page) => {
         const {heading, dispatch,query } = this.props
+        this.setState({
+            currentPage:page
+        })
          if(heading === 'Top 20 Movies'){ 
                 axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
                     .then(res =>  
@@ -30,20 +34,20 @@ class Pagination extends Component {
     prevPage = () => {
         const {startIndex, endIndex} = this.state;
         if (this.validateIndex(startIndex - 5) && this.validateIndex(endIndex - 5)) {
-            this.setState(prevState => ({
-                startIndex: prevState.startIndex - 5,
-                endIndex: prevState.endIndex - 5
-            }));
+            this.setState({
+                startIndex: startIndex - 5,
+                endIndex: endIndex - 5,
+            });
         }
     };
 
     nextPage = () => {
         const {startIndex, endIndex} = this.state;
         if (this.validateIndex(startIndex + 5) && this.validateIndex(endIndex + 5)) {
-            this.setState(prevState => ({
-                startIndex: prevState.startIndex + 5,
-                endIndex: prevState.endIndex + 5
-            }));
+            this.setState({
+                startIndex:startIndex + 5,
+                endIndex:endIndex + 5,
+            });
         }
     };
 
@@ -51,6 +55,7 @@ class Pagination extends Component {
         const pagesCount = Math.ceil(this.props.itemsCount/this.props.pageSize)
         if(this.props.pageSize < 20) return null;
         const pages = _.range(1, pagesCount + 1)
+        console.log(pagesCount)
             return (
                     <nav aria-label="...">
                         <ul className="pagination pagination-lg">
@@ -58,7 +63,7 @@ class Pagination extends Component {
                                 <Link  className="page-link" to="" onClick={this.prevPage}>Previous</Link>
                             </li>
                             {pages.slice(this.state.startIndex,this.state.endIndex).map(page=>(
-                                <li key = {page} className="page-item mx-auto">
+                                <li key = {page} className={this.state.currentPage === page ? 'page-item active' : 'page-item'}>
                                     <Link to='' className="page-link" onClick={()=>{this.onPageChange(page)}}>{page}</Link>
                                 </li>
                             ))}
