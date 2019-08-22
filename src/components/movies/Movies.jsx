@@ -8,19 +8,20 @@ const Movies = () => {
         return(
             <Consumer>
                 {value => {
-                    const { movie_list,heading,total_results,dispatch,query } = value
+                    const { movie_list,heading,total_results,dispatch,query,total_pages } = value
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
                         return (
                             <React.Fragment>
                                 <h3 className='text-center mb-4'>{heading}</h3>
+                                <p style={{textAlign:'right'}}><strong>{total_results}</strong>{' '}movies in the database.</p>
                                 <div className="row">
                                     {movie_list.map(movie=>(
                                         <Movie key={movie.id} movie={movie}/>
                                     ))}
                                 </div>
-                                <Pagination itemsCount = {total_results} pageSize = {movie_list.length} dispatch = {dispatch} heading = {heading} query={query}/>
+                                <Pagination totalPages = {total_pages} itemsCount = {total_results} pageSize = {movie_list.length} dispatch = {dispatch} heading = {heading} query={query}/>
                             </React.Fragment>
                         )} 
                 }}

@@ -5,6 +5,10 @@ import _ from 'lodash';
 
 
 class Pagination extends Component {
+    state = {
+        startIndex:0,
+        endIndex:4
+    }
     onPageChange = (page) => {
         const {heading, dispatch,query } = this.props
          if(heading === 'Top 20 Movies'){ 
@@ -22,20 +26,45 @@ class Pagination extends Component {
                 }) ) 
          } 
     }
+    validateIndex = index => index >= 0 && index <= this.props.totalPages;
+    prevPage = () => {
+        const {startIndex, endIndex} = this.state;
+        if (this.validateIndex(startIndex - 5) && this.validateIndex(endIndex - 5)) {
+            this.setState(prevState => ({
+                startIndex: prevState.startIndex - 5,
+                endIndex: prevState.endIndex - 5
+            }));
+        }
+    };
+
+    nextPage = () => {
+        const {startIndex, endIndex} = this.state;
+        if (this.validateIndex(startIndex + 5) && this.validateIndex(endIndex + 5)) {
+            this.setState(prevState => ({
+                startIndex: prevState.startIndex + 5,
+                endIndex: prevState.endIndex + 5
+            }));
+        }
+    };
 
     render(){
         const pagesCount = Math.ceil(this.props.itemsCount/this.props.pageSize)
         if(this.props.pageSize < 20) return null;
         const pages = _.range(1, pagesCount + 1)
-        console.log(pages)
             return (
                     <nav aria-label="...">
                         <ul className="pagination pagination-lg">
-                            {pages.slice(0,8).map(page=>(
+                            <li className="page-item">
+                                <Link  className="page-link" to="" onClick={this.prevPage}>Previous</Link>
+                            </li>
+                            {pages.slice(this.state.startIndex,this.state.endIndex).map(page=>(
                                 <li key = {page} className="page-item mx-auto">
-                                    <Link to='' className="page-link" onClick={()=>this.onPageChange(page)}>{page}</Link>
+                                    <Link to='' className="page-link" onClick={()=>{this.onPageChange(page)}}>{page}</Link>
                                 </li>
                             ))}
+                            <li className="page-item">
+                                <Link  className="page-link" to="" onClick={this.nextPage}>Next</Link>
+                            </li>
                         </ul>
                     </nav>
             )

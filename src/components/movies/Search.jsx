@@ -14,7 +14,8 @@ class Search extends Component {
             type:'SEARCH_MOVIES',
             payload: res.data.results,
             query: this.state.movieTitle,
-            total:res.data.total_results
+            total:res.data.total_results,
+            pages:res.data.total_pages
         }) )
     } 
     onChange = (e) => {
