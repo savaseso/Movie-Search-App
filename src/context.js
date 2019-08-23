@@ -27,6 +27,7 @@ const Context = React.createContext();
 export class Provider extends Component {
     state = {
         movie_list: [],
+        genres:[],
         total_results:0,
         total_pages:0,
         query:'',
@@ -40,10 +41,14 @@ export class Provider extends Component {
                 total_results:res.data.total_results,
                 total_pages:res.data.total_pages
             }))
+            .then(
+                await axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=9b92096f6cb5ae922d214aed2bfedc05&language=en-US')
+                .then(res=> this.setState({genres:res.data.genres}))
+            )
             .catch(err => console.log(err))
     }
     render() {
-        console.log(this.state.total_pages)
+        console.log(this.state.movie_list)
         return (
             <Context.Provider value={this.state}>
                 {this.props.children}

@@ -56,6 +56,7 @@ class Pagination extends Component {
         if(this.props.pageSize < 20) return null;
         const pages = _.range(1, pagesCount + 1)
         console.log(pagesCount)
+        
             return (
                     <nav aria-label="...">
                         <ul className="pagination pagination-lg">

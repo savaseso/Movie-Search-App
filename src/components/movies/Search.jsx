@@ -4,16 +4,16 @@ import { Consumer } from '../../context'
 
 class Search extends Component {
     state = {
-        movieTitle:''
+        query:''
     }
      findMovie = (dispatch,e) => {
         e.preventDefault();
-        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${this.state.movieTitle}&page=1&include_adult=false`)
+        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${this.state.query}&page=1&include_adult=false`)
         .then(res =>  
              dispatch({
             type:'SEARCH_MOVIES',
             payload: res.data.results,
-            query: this.state.movieTitle,
+            query: this.state.query,
             total:res.data.total_results,
             pages:res.data.total_pages
         }) )
@@ -40,9 +40,9 @@ class Search extends Component {
                                     </div>
                                     <input 
                                         className="form-control py-2 border-right-0 border" 
-                                        type="text" placeholder="Movie title..." 
-                                        name='movieTitle' 
-                                        value={this.state.movieTitle} 
+                                        type="search" placeholder="Movie title..." 
+                                        name='query' 
+                                        value={this.state.query} 
                                         onChange={this.onChange} />
                                     <button className="btn btn-primary btn-block" type="submit">Search</button>
                                 </div>

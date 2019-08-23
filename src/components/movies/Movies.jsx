@@ -3,18 +3,20 @@ import { Consumer } from '../../context';
 import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination'
 import Movie from './Movie'
+import Genres from './Genres'
 
 const Movies = () => {
         return(
             <Consumer>
                 {value => {
-                    const { movie_list,heading,total_results,dispatch,query,total_pages } = value
+                    const { movie_list,heading,total_results,dispatch,query,total_pages,genres } = value
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
                         return (
                             <React.Fragment>
                                 <h3 className='text-center mb-4'>{heading}</h3>
+                                <Genres genres = {genres} />
                                 <p style={{textAlign:'right'}}><strong>{total_results}</strong>{' '}movies in the database.</p>
                                 <div className="row">
                                     {movie_list.map(movie=>(
