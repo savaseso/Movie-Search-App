@@ -53,9 +53,9 @@ class Pagination extends Component {
 
     render(){
         const pagesCount = Math.ceil(this.props.itemsCount/this.props.pageSize)
-        if(this.props.pageSize < 20) return null;
-        const pages = _.range(1, pagesCount + 1)
-        console.log(pagesCount)
+/*         if(this.props.pageSize < 20) return null; nem jo mert ha a 3.oldalon kissebb mint 20 akkor eltunik
+ */        const pages = _.range(1, pagesCount + 1)
+        console.log(this.props.itemsCount)
         
             return (
                     <nav aria-label="...">
