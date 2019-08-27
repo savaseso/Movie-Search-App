@@ -11,24 +11,23 @@ class Pagination extends Component {
         currentPage:1
     }
     onPageChange = (page) => {
-        const {heading, dispatch,query } = this.props
+        const {heading,query } = this.props
         this.setState({
             currentPage:page
         })
          if(heading === 'Top 20 Movies'){ 
-                axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
-                    .then(res =>  
-                        dispatch({
-                        type:'PAGINATION',
-                        payload: res.data.results
-            }) )} else {
-            axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`)
+             this.getData(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
+      } else {
+            this.getData(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`)
+         } 
+    }
+    getData = (url)=> {
+        axios.get(url)
                 .then(res =>  
-                    dispatch({
+                    this.props.dispatch({
                     type:'PAGINATION',
                     payload: res.data.results
-                }) ) 
-         } 
+                    }))
     }
     validateIndex = index => index >= 0 && index <= this.props.totalPages;
     prevPage = () => {
@@ -55,7 +54,7 @@ class Pagination extends Component {
         const pagesCount = Math.ceil(this.props.itemsCount/this.props.pageSize)
 /*         if(this.props.pageSize < 20) return null; nem jo mert ha a 3.oldalon kissebb mint 20 akkor eltunik
  */        const pages = _.range(1, pagesCount + 1)
-        console.log(this.props.itemsCount)
+            
         
             return (
                     <nav aria-label="...">

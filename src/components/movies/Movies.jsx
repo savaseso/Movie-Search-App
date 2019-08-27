@@ -6,17 +6,21 @@ import Movie from './Movie'
 import Genres from './Genres'
 
 const Movies = () => {
+    const getGenreId = (id) => {
+        console.log(id) //class base component?! and the filter movie_list
+      }
         return(
             <Consumer>
                 {value => {
                     const { movie_list,heading,total_results,dispatch,query,total_pages,genres } = value
+                    console.log(movie_list)
                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
                         return (
                             <React.Fragment>
                                 <h3 className='text-center mb-4'>{heading}</h3>
-                                <Genres genres = {genres} />
+                                <Genres getGenreId = {getGenreId} genres = {genres} />
                                 <p style={{textAlign:'right'}}><strong>{total_results}</strong>{' '}movies in the database.</p>
                                 <div className="row">
                                     {movie_list.map(movie=>(
