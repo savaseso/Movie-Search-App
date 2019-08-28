@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Consumer } from '../../context';
 import Spinner from '../layouts/Spinner';
 import Pagination from '../layouts/Pagination'
 import Movie from './Movie'
 import Genres from './Genres'
 
-const Movies = () => {
-    const getGenreId = (id) => {
-        console.log(id) //class base component?! and the filter movie_list
+class Movies extends Component {
+    state = {
+        id:0
+    }
+     getGenreId = (id) => {
+        this.setState({id}) //class base component?! and the filter movie_list
       }
+      render(){
+          console.log(this.state.id)
         return(
             <Consumer>
                 {value => {
-                    const { movie_list,heading,total_results,dispatch,query,total_pages,genres } = value
-                    console.log(movie_list)
-                    if(movie_list === undefined || movie_list.length === 0){
+                    const { movie_list,heading,total_results,dispatch,query,total_pages } = value
+                    const filteredMovies = movie_list.filter(movie => {
+                        return this.state.id === 0 ? movie_list : movie.genre_ids.includes(this.state.id)  
+                    })
+                    console.log(filteredMovies)
+                     if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
                         return (
                             <React.Fragment>
                                 <h3 className='text-center mb-4'>{heading}</h3>
-                                <Genres getGenreId = {getGenreId} genres = {genres} />
+                                <Genres getGenreId = {this.getGenreId} />
                                 <p style={{textAlign:'right'}}><strong>{total_results}</strong>{' '}movies in the database.</p>
                                 <div className="row">
-                                    {movie_list.map(movie=>(
+                                    {filteredMovies.map(movie=>(
                                         <Movie key={movie.id} movie={movie}/>
                                     ))}
                                 </div>
@@ -33,6 +41,7 @@ const Movies = () => {
                 }}
             </Consumer>
         )
+            }
     }
 
 export default Movies
