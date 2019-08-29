@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import getGenres from '../movies/genres.json'
 
 const Genres = (props) => {
     console.log(props.genres)
@@ -12,7 +11,7 @@ const Genres = (props) => {
         </Link>
       
         <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {getGenres.map(genre => 
+            {props.genres.map(genre => 
                 <Link key={genre.id}className="dropdown-item" onClick = {()=>props.getGenreId(genre.id)} to="">{genre.name}</Link>
             )}
         </div>

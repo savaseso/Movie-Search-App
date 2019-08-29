@@ -42,7 +42,7 @@ export class Provider extends Component {
                 total_pages:res.data.total_pages
             }))
             .then(
-                await axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=9b92096f6cb5ae922d214aed2bfedc05&language=en-US')
+                await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
                 .then(res=> this.setState({genres:res.data.genres}))
             )
             .catch(err => console.log(err))
