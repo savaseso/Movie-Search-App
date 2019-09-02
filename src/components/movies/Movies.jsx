@@ -20,6 +20,7 @@ class Movies extends Component {
                     const filteredMovies = movie_list.filter(movie => {
                         return this.state.id === 0 ? movie_list : movie.genre_ids.includes(this.state.id)  
                     })
+                    console.log(filteredMovies.length)
                      if(movie_list === undefined || movie_list.length === 0){
                         return <Spinner />
                     } else { 
