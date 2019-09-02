@@ -11,15 +11,16 @@ class Pagination extends Component {
         currentPage: 1
     }
     onPageChange = (page) => {
-        const { heading, query } = this.props
+        const { heading, query,genreId } = this.props
         this.setState({
             currentPage: page
         })
         if (heading === 'Top 20 Movies') {
             this.getData(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
+        } else if (heading === 'Category results') {
+            this.getData(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreId}`)
         } else {
-            this.getData(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`)
-        }
+            this.getData(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`)}
     }
     getData = (url) => {
         axios.get(url)
@@ -53,7 +54,7 @@ class Pagination extends Component {
     render() {
 /*         if(this.props.pageSize < 20) return null; nem jo mert ha a 3.oldalon kissebb mint 20 akkor eltunik
  */        const pages = _.range(1, this.props.totalPages + 1)
-        console.log(this.props.totalPages)
+        console.log(this.props.genreId)
 
         if (this.props.totalPages > 1) {
             return (

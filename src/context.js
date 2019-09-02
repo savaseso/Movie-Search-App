@@ -19,6 +19,15 @@ const Context = React.createContext();
                 ...state,
                 movie_list: action.payload,
             }
+        case 'GENRES':
+            return {
+                ...state,
+                movie_list: action.payload,
+                heading: 'Category results',
+                genreId:action.id,
+                total_results:action.total,
+                total_pages:action.pages
+            }
         default:
             return state
     }  
@@ -28,6 +37,7 @@ export class Provider extends Component {
     state = {
         movie_list: [],
         genres:[],
+        genreId:0,
         total_results:0,
         total_pages:0,
         query:'',
@@ -49,6 +59,7 @@ export class Provider extends Component {
     }
     render() {
         console.log(this.state.movie_list)
+        console.log(this.state.query.length)
         return (
             <Context.Provider value={this.state}>
                 {this.props.children}
