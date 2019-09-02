@@ -27,7 +27,7 @@ class Movies extends Component {
                         return (
                             <React.Fragment>
                                 <h3 className='text-center mb-4'>{heading}</h3>
-                                <Genres getGenreId = {this.getGenreId} genres = {genres} />
+                                {heading === 'Top 20 Movies'?<Genres getGenreId = {this.getGenreId} genres = {genres} />:null}
                                 <p style={{textAlign:'right'}}><strong>{total_results}</strong>{' '}movies in the database.</p>
                                 <div className="row">
                                     {filteredMovies.map(movie=>(
