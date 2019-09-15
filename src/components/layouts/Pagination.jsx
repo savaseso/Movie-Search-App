@@ -54,7 +54,6 @@ class Pagination extends Component {
 
     render() {
         const pages = _.range(1, this.props.totalPages + 1)
-        console.log(this.props.genreId)
         const {startIndex,endIndex,currentPage} = this.state
         if (this.props.totalPages > 1) {
             return (

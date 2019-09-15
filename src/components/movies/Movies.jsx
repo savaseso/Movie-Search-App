@@ -10,7 +10,7 @@ const Movies = () => {
             <Consumer>
                 {value => {
                     const { movie_list, heading, total_results, dispatch, query, total_pages, genres, genreId } = value
-                    console.log(genres)
+                    console.log(total_results)
                     if (movie_list === undefined || movie_list.length === 0) {
                         return <Spinner />
                     } else {
@@ -27,7 +27,6 @@ const Movies = () => {
                                 <Pagination
                                     totalPages={total_pages}
                                     itemsCount={total_results}
-                                    pageSize={movie_list.length}
                                     dispatch={dispatch}
                                     genreId={genreId}
                                     heading={heading}

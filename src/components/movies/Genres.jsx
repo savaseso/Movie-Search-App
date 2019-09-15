@@ -4,7 +4,6 @@ import axios from 'axios'
 
 const Genres = (props) => {
     const getGenreId = (id) => {
-        console.log(id)
         axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${id}`)
         .then(res => 
             props.dispatch({
