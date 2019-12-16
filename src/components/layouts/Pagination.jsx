@@ -23,13 +23,17 @@ class Pagination extends Component {
             this.getData(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`)
         }
     }
-    getData = (url) => {
-        axios.get(url)
-            .then(res =>
-                this.props.dispatch({
-                    type: 'PAGINATION',
-                    payload: res.data.results
-                }))
+    getData = async (url) => {
+        try {
+            const res = await axios.get(url)
+            this.props.dispatch({
+                type: 'PAGINATION',
+                payload: res.data.results
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
     validateIndex = index => index >= 0 && index <= this.props.totalPages;
     prevPage = () => {
@@ -53,9 +57,10 @@ class Pagination extends Component {
     };
 
     render() {
-        const pages = _.range(1, this.props.totalPages + 1)
-        const {startIndex,endIndex,currentPage} = this.state
-        if (this.props.totalPages > 1) {
+        const { startIndex, endIndex, currentPage } = this.state
+        const { totalPages } = this.props
+        const pages = _.range(1, totalPages + 1)
+        if (totalPages > 1) {
             return (
                 <nav aria-label="...">
                     <ul className="pagination pagination-lg">

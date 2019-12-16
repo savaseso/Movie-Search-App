@@ -6,7 +6,6 @@ return(
         <Link to='/' className="navbar-brand mb-00 h1 mx-auto">
             MovieFinder
         </Link>
-        <p className='navbar-brand'>Sign in/Log in</p>
     </nav>
     )
 }

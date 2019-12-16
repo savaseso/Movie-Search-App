@@ -45,21 +45,22 @@ export class Provider extends Component {
         dispatch: action => this.setState(state => reducer(state, action))
     }
     async componentDidMount() {
-        await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-            .then(res => this.setState({
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
+            const genres = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
+            this.setState({
                 movie_list: res.data.results,
                 total_results: res.data.total_results,
-                total_pages: res.data.total_pages
-            }))
-            .then(
-                await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
-                    .then(res => this.setState({ genres: res.data.genres }))
-            )
-            .catch(err => console.log(err))
+                total_pages: res.data.total_pages,
+                genres: genres.data.genres
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
     render() {
-        console.log(this.state.movie_list)
-        console.log(this.state.query.length)
+        console.log(this.state.query)
         return (
             <Context.Provider value={this.state}>
                 {this.props.children}

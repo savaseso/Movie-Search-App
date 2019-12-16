@@ -9,25 +9,23 @@ class Details extends Component {
     videos: {},
     details: {}
   }
-  async componentDidMount() { //atalakitani sima functionná és lehet hogy nem 
-    await axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}/videos?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
-      .then(res => {
-        this.setState({ videos: res.data.results[0] })
-
-        return axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
-
+  async componentDidMount() {
+    try {
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}/videos?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
+      const result = await axios.get(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=${process.env.REACT_APP_MM_KEY}&language=en-US`)
+      this.setState({
+        videos: res.data.results[0],
+        details: result.data
       })
-      .then(res => this.setState({ details: res.data }))
-      .catch(err => console.log(err))
-
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   render() {
     const { original_title, overview, release_date } = this.state.details
     const { videos, details } = this.state
-    console.log(Object.keys(this.state.details))
-/*       console.log(videos)
- */        if (Object.keys(videos).length === 0 || videos === undefined || details === undefined || Object.keys(details).length === 0) {
+    if (Object.keys(videos).length === 0 || videos === undefined || details === undefined || Object.keys(details).length === 0) {
       return <Spinner />
     } else {
       return (
